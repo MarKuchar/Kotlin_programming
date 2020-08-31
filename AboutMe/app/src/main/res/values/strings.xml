@@ -1,0 +1,55 @@
+<resources>
+    <string name="app_name">AboutMe</string>
+    <string name="name">Martin Kuchar</string>
+    <string name="yellow_star">Yellow star</string>
+    <string name="bio_text">
+        Hi, my name is Martin.
+
+        I love Android so much!
+        I love Android so much!
+        I love Android so much!
+        I love Android so much!
+        I love Android so much!
+        I love Android so much!
+        I love Android so much!
+        I love Android so much!
+        I love Android so much!
+        I love Android so much!
+        I love Android so much!
+        I love Android so much!
+        I love Android so much!
+        I love Android so much!
+        I love Android so much!
+        I love Android so much!
+        I love Android so much!
+        I love Android so much!
+        I love Android so much!
+        I love Android so much!
+        I love Android so much!
+        I love Android so much!
+        I love Android so much!
+        I love Android so much!
+        I love Android so much!
+        I love Android so much!
+        I love Android so much!
+        I love Android so much!
+        I love Android so much!
+        I love Android so much!
+        I love Android so much!
+        I love Android so much!
+        I love Android so much!
+        I love Android so much!
+        I love Android so much!
+        I love Android so much!
+        I love Android so much!
+        I love Android so much!
+        I love Android so much!
+        I love Android so much!
+        I love Android so much!
+        I love Android so much!
+    </string>
+    <string name="what_is_your_nickname">What is your Nickname?</string>
+    <string name="done_btn">DONE</string>
+
+
+</resources>
