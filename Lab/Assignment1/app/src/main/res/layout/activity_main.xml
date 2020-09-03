@@ -37,6 +37,7 @@
 
         <Button
             android:id="@+id/ls_button"
+            android:tag="@{question.lsString}"
             android:layout_width="120dp"
             android:layout_height="120dp"
             app:layout_constraintBaseline_toBaselineOf="@+id/rs_button"
@@ -48,6 +49,7 @@
 
         <Button
             android:id="@+id/rs_button"
+            android:tag="@{question.rsString}"
             android:layout_width="120dp"
             android:layout_height="120dp"
             android:layout_marginTop="200dp"
