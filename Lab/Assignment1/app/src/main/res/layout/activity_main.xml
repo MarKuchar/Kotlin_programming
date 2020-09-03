@@ -44,7 +44,6 @@
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             android:backgroundTint="@{question.lsColor}"
-            android:background="@{question.lsColor}"
             />
 
         <Button
