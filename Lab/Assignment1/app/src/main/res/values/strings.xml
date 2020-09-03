@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">ColorQuiz</string>
+    <string name="score_TV">Score: 0</string>
+    <string name="question_TV">Select the right color!</string>
+    <string name="color_TV">Color</string>
 </resources>
