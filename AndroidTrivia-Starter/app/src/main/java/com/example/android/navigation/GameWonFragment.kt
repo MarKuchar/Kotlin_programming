@@ -16,13 +16,14 @@
 
 package com.example.android.navigation
 
+import android.content.Intent
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
+import androidx.navigation.ui.NavigationUI
 import com.example.android.navigation.databinding.FragmentGameWonBinding
 
 
@@ -34,8 +35,48 @@ class GameWonFragment : Fragment() {
                 inflater, R.layout.fragment_game_won, container, false)
 
         binding.nextMatchButton.setOnClickListener {
-            it.findNavController().navigate(R.id.action_gameWonFragment_to_gameFragment)
+            it.findNavController().navigate(GameWonFragmentDirections.actionGameWonFragmentToGameFragment())
         }
+
+        setHasOptionsMenu(true)
+
+        val arg = GameWonFragmentArgs.fromBundle(requireArguments())
+        Toast.makeText(context, "Num of correct: ${arg.numCorrectQuestions}, Num of Questions: ${arg.numQuestions}", Toast.LENGTH_LONG).show()
+
         return binding.root
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+        inflater.inflate(R.menu.winner_menu, menu)
+        val shareIntent = getShareIntent()
+        if (shareIntent.resolveActivity(requireActivity().packageManager) == null) {
+            // if there is no activity to preform request then we are going to hide
+            menu.findItem(R.id.share).isVisible = false
+        }
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        // start a share activity
+        when (item!!.itemId) {
+            R.id.share -> shareSuccess()
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
+    private fun getShareIntent(): Intent {
+        val shareIntent = Intent(Intent.ACTION_SEND)
+        val arg = GameWonFragmentArgs.fromBundle(requireArguments())
+        val message = getString(R.string.share_success_text, arg.numCorrectQuestions, arg.numQuestions)
+        shareIntent.setType("text/plain").putExtra(Intent.EXTRA_TEXT, message)
+        return shareIntent
+    }
+
+    private fun shareSuccess() {
+        // create intent object (implicit intent)
+        val shareIntent = getShareIntent()
+
+        // start activity using the intent object
+        startActivity(shareIntent)
     }
 }
