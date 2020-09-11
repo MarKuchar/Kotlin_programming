@@ -51,16 +51,9 @@ class GameFragment : Fragment() {
         )
 
         viewModel = ViewModelProvider(this).get(GameViewModel::class.java)
-
+        // ALWAYS SET ViewModel for dataBinding
         binding.gameViewModel = viewModel
-        
-        viewModel.score.observe(viewLifecycleOwner, Observer { newScore ->
-            binding.scoreText.text = newScore.toString()
-        })
-
-        viewModel.word.observe(viewLifecycleOwner, Observer { newWord ->
-            binding.wordText.text = newWord
-        })
+        binding.lifecycleOwner = viewLifecycleOwner
 
         viewModel.eventGameFinish.observe(viewLifecycleOwner, Observer { hasFinished ->
             if (hasFinished) {
@@ -70,11 +63,7 @@ class GameFragment : Fragment() {
 
         Log.i("GameFragment", "Call ViewModelProvider.get")
 
-        binding.correctButton.setOnClickListener { onCorrect() }
-        binding.skipButton.setOnClickListener { onSkip() }
-        binding.endGameButton.setOnClickListener { onEndGame() }
         return binding.root
-
     }
 
     private fun onEndGame() {
@@ -83,14 +72,6 @@ class GameFragment : Fragment() {
         action.score = viewModel.score.value ?: 0
         NavHostFragment.findNavController(this).navigate(action)
         viewModel.onGameFinishComplete()
-    }
-
-    private fun onSkip() {
-        viewModel.onSkip()
-    }
-
-    private fun onCorrect() {
-        viewModel.onCorrect()
     }
 
     /** Methods for updating the UI **/
