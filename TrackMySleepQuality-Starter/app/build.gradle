@@ -43,6 +43,8 @@ android {
         dataBinding true
     }
 
+    
+
 }
 
 dependencies {
