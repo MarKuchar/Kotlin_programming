@@ -1,5 +1,6 @@
 package com.example.android.trackmysleepquality.sleeptracker
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.inflate
@@ -18,12 +19,12 @@ import com.example.android.trackmysleepquality.databinding.FragmentSleepDetailBi
 import com.example.android.trackmysleepquality.databinding.ListItemSleepNightBinding
 import java.lang.ClassCastException
 
-private val ITEM_VIEW_TYPE_HEADER = 0
-private val ITEM_VIEW_TYPE_ITEM = 1
+private const val ITEM_VIEW_TYPE_HEADER = 0
+private const val ITEM_VIEW_TYPE_ITEM = 1
 class SleepNightAdapter(val clickListener: SleepNightListener):
         ListAdapter<DataItem, RecyclerView.ViewHolder>(SleepNightDiffCallback()) {
 
-    class TextViewHolder(view: View): RecyclerView.ViewHolder(view){
+    class TextViewHolder(view: View): RecyclerView.ViewHolder(view) {
         companion object {
             fun from(parent: ViewGroup): TextViewHolder {
                 val layoutInflater = LayoutInflater.from(parent.context)
@@ -53,11 +54,11 @@ class SleepNightAdapter(val clickListener: SleepNightListener):
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (holder) {
             is ViewHolder -> {
-                val item = getItem(position) as DataItem.SleepNightItem
-                holder.bind(item.sleepNight, clickListener)
-            }
+                val nightItem = getItem(position) as DataItem.SleepNightItem
+                holder.bind(nightItem.sleepNight, clickListener)
             }
         }
+    }
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
@@ -88,7 +89,7 @@ class SleepNightDiffCallback : DiffUtil.ItemCallback<DataItem>() {
     override fun areItemsTheSame(oldItem: DataItem, newItem: DataItem): Boolean {
         return oldItem.id == newItem.id
     }
-
+    @SuppressLint("DiffUtilEquals")
     override fun areContentsTheSame(oldItem: DataItem, newItem: DataItem): Boolean {
         return oldItem == newItem
     }
