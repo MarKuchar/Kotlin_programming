@@ -20,6 +20,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -58,7 +59,6 @@ class SleepTrackerFragment : Fragment() {
         val viewModelFactory = SleepTrackerViewModelFactory(dataSource, application)
         val sleepTrackerViewModel = ViewModelProvider(this, viewModelFactory).get(SleepTrackerViewModel::class.java)
 
-//        binding.lifecycleOwner = viewLifecycleOwner
         binding.sleepTrackerViewModel = sleepTrackerViewModel
 
         binding.lifecycleOwner = this
@@ -83,17 +83,25 @@ class SleepTrackerFragment : Fragment() {
             }
         })
 
-        val adapter = SleepNightAdapter()
+        val adapter = SleepNightAdapter(SleepNightListener {
+            sleepTrackerViewModel.onSleepNightClicked(it)
+        })
+
         binding.sleepList.adapter = adapter
 
         sleepTrackerViewModel.nights.observe(viewLifecycleOwner, Observer {
             it?.let {
-                adapter.submitList(it)
+                adapter.addHeaderAndSubmitList(it)
             }
         })
 
         val manager = GridLayoutManager(activity, 5, GridLayoutManager.VERTICAL, false)
         binding.sleepList.layoutManager = manager
+
+        sleepTrackerViewModel.navigateToSleepDetail.observe(viewLifecycleOwner, Observer {
+            this.findNavController().navigate(SleepTrackerFragmentDirections.actionSleepTrackerFragmentToSleepDetailFragment(it))
+            sleepTrackerViewModel.onSleepDetailNavigated()
+        })
 
         return binding.root
     }
