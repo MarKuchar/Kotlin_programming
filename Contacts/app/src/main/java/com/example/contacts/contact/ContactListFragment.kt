@@ -11,11 +11,14 @@ import com.example.contacts.R
 import com.example.contacts.database.Contact
 import com.example.contacts.database.ContactDatabase
 import com.example.contacts.databinding.FragmentContactListBinding
+import androidx.navigation.findNavController
+import androidx.recyclerview.widget.GridLayoutManager
 
 class ContactListFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?): View? {
+
         val binding = DataBindingUtil.inflate<FragmentContactListBinding>(inflater,
             R.layout.fragment_contact_list,container,false)
 
@@ -23,14 +26,27 @@ class ContactListFragment : Fragment() {
 
         val application = requireNotNull(this.activity).application
         val dataSource = ContactDatabase.getInstance(application).contactDatabaseDao
-//
+
         val viewModelFactory = ContactViewModelFactory(dataSource, application)
-
-//        binding.lifecycleOwner = this
-//        binding.contactViewModel = viewModel
-
-//        val viewModelFactory = ContactViewModelFactory("Martin Kuchar")
         val viewModel = ViewModelProvider(this, viewModelFactory).get(ContactViewModel::class.java)
+
+        binding.lifecycleOwner = this
+        binding.contactViewModel = viewModel
+
+        // Init adapter object to manage the data display on the text holder
+        val adapter = ContactListAdapter()
+        binding.contactList.adapter = adapter
+
+        // Init manager to layout all the text holders
+        val manager = GridLayoutManager(activity, 1)
+//        manager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
+//            override fun getSpanSize(position: Int) =  when (position) {
+//                0 -> 3
+//                else -> 1
+//            }
+//        }
+
+        binding.contactList.layoutManager = manager
 
         return binding.root
     }

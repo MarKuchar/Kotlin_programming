@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Contacts</string>
+    <string name="ContactListFragment">contact_list_fragment</string>
+    <string name="test_string">BlahBlahBlah</string>
 </resources>

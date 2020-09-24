@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/navigation"
+    xmlns:tools="http://schemas.android.com/tools"
+    app:startDestination="@id/contact_list_fragment">
+
+
+    <fragment
+        android:id="@+id/contact_list_fragment"
+        android:name="com.example.contacts.contact.ContactListFragment"
+        android:label="@string/ContactListFragment"
+        tools:layout="@layout/fragment_contact_list"/>
+
+</navigation>

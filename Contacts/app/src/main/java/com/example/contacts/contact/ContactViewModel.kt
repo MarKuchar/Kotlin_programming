@@ -9,15 +9,4 @@ import com.example.contacts.database.ContactDatabaseDao
 class ContactViewModel(
     val databaseDAO: ContactDatabaseDao,
     application: Application) : AndroidViewModel(application) {
-
-    init {
-        Log.i("GameViewModel", "GameViewModel created!")
-    }
-
-    override fun onCleared() {
-        super.onCleared()
-        Log.i("GameViewModel", "GameViewModel destroyed!")
-    }
-
-
 }
