@@ -41,6 +41,7 @@ android {
     }
     productFlavors {
     }
+
     buildFeatures {
         dataBinding true
     }
