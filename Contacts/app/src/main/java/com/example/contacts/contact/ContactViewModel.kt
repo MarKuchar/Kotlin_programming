@@ -9,4 +9,7 @@ import com.example.contacts.database.ContactDatabaseDao
 class ContactViewModel(
     val databaseDAO: ContactDatabaseDao,
     application: Application) : AndroidViewModel(application) {
+
+    val contacts = databaseDAO.getAllContacts()
+
 }

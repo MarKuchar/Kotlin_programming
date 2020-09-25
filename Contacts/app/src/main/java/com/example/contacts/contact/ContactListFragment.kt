@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.contacts.R
 import com.example.contacts.database.Contact
@@ -36,6 +37,14 @@ class ContactListFragment : Fragment() {
         // Init adapter object to manage the data display on the text holder
         val adapter = ContactListAdapter()
         binding.contactList.adapter = adapter
+
+
+        // Get data from to database via view model and assign it to adapter's data
+        viewModel.contacts.observe(viewLifecycleOwner, Observer {
+            it?.let {
+                adapter.data = it
+            }
+        })
 
         // Init manager to layout all the text holders
         val manager = GridLayoutManager(activity, 1)
