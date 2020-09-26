@@ -11,12 +11,16 @@
         android:id="@+id/contact_list_fragment"
         android:name="com.example.contacts.contact.ContactListFragment"
         android:label="@string/ContactListFragment"
-        tools:layout="@layout/fragment_contact_list"/>
+        tools:layout="@layout/fragment_contact_list">
+        <action
+            android:id="@+id/action_contact_list_fragment_to_add_contact"
+            app:destination="@id/add_contact" />
+    </fragment>
 
     <fragment
         android:id="@+id/add_contact"
-        android:name="com.example.contacts.contact.ContactListFragment"
-        android:label="@string/ContactListFragment"
+        android:name="com.example.contacts.addContact.AddContactFragment"
+        android:label="@string/AddContact"
         tools:layout="@layout/fragment_add_contact"/>
 
 </navigation>
