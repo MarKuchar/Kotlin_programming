@@ -1,14 +1,11 @@
 package com.example.contacts.contact
 
-import android.graphics.Color
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.example.contacts.R
-import com.example.contacts.TextItemViewHolder
 import com.example.contacts.database.Contact
+import com.example.contacts.databinding.ListItemContactBinding
 
 class ContactListAdapter : RecyclerView.Adapter<ContactListAdapter.ViewHolder>() {
 
@@ -17,10 +14,7 @@ class ContactListAdapter : RecyclerView.Adapter<ContactListAdapter.ViewHolder>()
     var list = arrayListOf("Martin", "Peter", "Jozef")
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val layoutInflater = LayoutInflater.from(parent.context)
-        val view = layoutInflater
-            .inflate(R.layout.list_item_contact, parent, false)
-        return ViewHolder(view)
+        return ViewHolder.from(parent)
     }
 
     override fun getItemCount(): Int {
@@ -33,8 +27,17 @@ class ContactListAdapter : RecyclerView.Adapter<ContactListAdapter.ViewHolder>()
         holder.phoneNumber.text = item.toString()
     }
 
-    class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
-        val fullName: TextView = itemView.findViewById(R.id.full_name)
-        val phoneNumber: TextView = itemView.findViewById(R.id.phone_number)
+    class ViewHolder private constructor(binding: ListItemContactBinding) : RecyclerView.ViewHolder(binding.root){
+        val fullName: TextView = binding.fullName
+        val phoneNumber: TextView = binding.phoneNumber
+
+        companion object {
+            fun from(parent: ViewGroup): ViewHolder {
+                val layoutInflater = LayoutInflater.from(parent.context)
+                val binding = ListItemContactBinding
+                    .inflate(layoutInflater, parent, false)
+                return ViewHolder(binding)
+            }
+        }
     }
 }

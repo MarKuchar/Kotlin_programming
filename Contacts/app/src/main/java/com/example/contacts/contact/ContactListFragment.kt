@@ -1,18 +1,15 @@
 package com.example.contacts.contact
 
+import android.content.Intent
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.contacts.R
-import com.example.contacts.database.Contact
 import com.example.contacts.database.ContactDatabase
 import com.example.contacts.databinding.FragmentContactListBinding
-import androidx.navigation.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 
 class ContactListFragment : Fragment() {
@@ -60,4 +57,8 @@ class ContactListFragment : Fragment() {
         return binding.root
     }
 
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+        inflater.inflate(R.menu.option_menu, menu)
+    }
 }
