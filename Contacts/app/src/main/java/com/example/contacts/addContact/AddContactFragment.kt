@@ -30,6 +30,13 @@ class AddContactFragment : Fragment() {
         binding.lifecycleOwner = this
         binding.newContactViewModel = viewModel
 
+        binding.save.setOnClickListener {
+            
+        }
+
+        binding.cancel.setOnClickListener {
+            activity?.onBackPressed()
+        }
 
         return binding.root
     }
