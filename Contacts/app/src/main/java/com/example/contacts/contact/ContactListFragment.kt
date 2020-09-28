@@ -36,11 +36,10 @@ class ContactListFragment : Fragment() {
         val adapter = ContactListAdapter()
         binding.contactList.adapter = adapter
 
-
         // Get data from to database via view model and assign it to adapter's data
         viewModel.contacts.observe(viewLifecycleOwner, Observer {
             it?.let {
-                adapter.data = it
+                adapter.addHeaderAndSubmitList(it)
             }
         })
 
