@@ -4,13 +4,14 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.contacts.R
-import com.example.contacts.contact.ContactViewModel
 import com.example.contacts.database.ContactDatabase
 import com.example.contacts.databinding.FragmentAddContactBinding
+import kotlinx.android.synthetic.main.fragment_add_contact.*
 
 
 class AddContactFragment : Fragment() {
@@ -31,7 +32,13 @@ class AddContactFragment : Fragment() {
         binding.newContactViewModel = viewModel
 
         binding.save.setOnClickListener {
-            
+            let {
+                val name = personName.text.toString()
+                val number = phoneNumber.text.toString().toInt()
+                viewModel.createContact(name, number)
+                Toast.makeText(activity, "Saved", Toast.LENGTH_SHORT).show()
+            }
+            Toast.makeText(activity, "Unsuccessfully", Toast.LENGTH_SHORT).show()
         }
 
         binding.cancel.setOnClickListener {
