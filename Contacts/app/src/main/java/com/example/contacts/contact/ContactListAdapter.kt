@@ -38,10 +38,6 @@ class ContactListAdapter : ListAdapter<ContactListAdapter.DataItem,
         submitList(items)
     }
 
-//    override fun getItemCount(): Int {
-//        return 3
-//    }
-
     override fun getItemViewType(position: Int): Int {
         return when (getItem(position)) {
             is DataItem.Header -> ITEM_VIEW_TYPE_HEADER
