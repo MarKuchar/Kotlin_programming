@@ -6,7 +6,9 @@
     </shared>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="cbeeb241-d4f6-4804-b7b7-ff2d7b1b00bd" name="Default Changelist" comment="" />
+    <list default="true" id="cbeeb241-d4f6-4804-b7b7-ff2d7b1b00bd" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/../Contacts/app/src/main/java/com/example/contacts/addContact/AddContactViewModel.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../Contacts/app/src/main/java/com/example/contacts/addContact/AddContactViewModel.kt" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -25,13 +27,23 @@
       </state>
     </system>
   </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="ProjectId" id="1iCgBuv0cMr2ECV3K5uZJbsbuqN" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showExcludedFiles" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="android.sdk.path" value="$PROJECT_DIR$/../Library/Android/sdk" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="project.structure.last.edited" value="Modules" />
+    <property name="project.structure.proportion" value="0.17" />
+    <property name="project.structure.side.proportion" value="0.2" />
   </component>
   <component name="RunManager">
     <configuration default="true" type="AndroidJUnit" factoryName="Android JUnit">
@@ -105,5 +117,11 @@
       <updated>1598977973165</updated>
     </task>
     <servers />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="365" y="264" key="#PSD" timestamp="1601416933484">
+      <screen x="0" y="0" width="1680" height="1050" />
+    </state>
+    <state x="365" y="264" key="#PSD/0.0.1680.1050/-1920.53.1920.1080@0.0.1680.1050" timestamp="1601416933484" />
   </component>
 </project>

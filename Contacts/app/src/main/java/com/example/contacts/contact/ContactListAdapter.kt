@@ -17,10 +17,6 @@ private val ITEM_VIEW_TYPE_ITEM = 1
 class ContactListAdapter : ListAdapter<ContactListAdapter.DataItem,
         RecyclerView.ViewHolder>(ContactDiffCallback()) {
 
-    var data = listOf<Contact>()
-    var dataTest: HashMap<String, Int> = hashMapOf("Martin" to 123, "Peter" to 234, "Jozef" to 456)
-    var list = arrayListOf("Martin", "Peter", "Jozef")
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
             ITEM_VIEW_TYPE_HEADER -> IndexViewHolder.from(parent)

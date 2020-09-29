@@ -90,7 +90,7 @@ class ContactListFragment : Fragment() {
                 true
             }
             R.id.clear -> {
-                viewModel.clearContacts()
+                viewModel.onClearContacts()
                 Toast.makeText(activity, "Clear", Toast.LENGTH_SHORT).show()
                 true
             }

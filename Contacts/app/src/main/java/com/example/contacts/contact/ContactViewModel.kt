@@ -15,9 +15,12 @@ class ContactViewModel(
     application: Application) : AndroidViewModel(application) {
     val contacts = databaseDAO.getAllContacts()
 
-    fun clearContacts() {
+    fun onClearContacts() {
         viewModelScope.launch {
-            databaseDAO.clear()
+            clear()
         }
+    }
+    suspend fun clear() {
+        databaseDAO.clear()
     }
 }
