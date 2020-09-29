@@ -14,4 +14,10 @@ class ContactViewModel(
     private val databaseDAO: ContactDatabaseDao,
     application: Application) : AndroidViewModel(application) {
     val contacts = databaseDAO.getAllContacts()
+
+    fun clearContacts() {
+        viewModelScope.launch {
+            databaseDAO.clear()
+        }
+    }
 }

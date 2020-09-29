@@ -2,6 +2,7 @@ package com.example.contacts.contact
 
 import android.os.Bundle
 import android.view.*
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -15,6 +16,8 @@ import com.example.contacts.database.Contact
 
 class ContactListFragment : Fragment() {
 
+    lateinit var viewModel: ContactViewModel
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?): View? {
 
@@ -27,7 +30,7 @@ class ContactListFragment : Fragment() {
         val dataSource = ContactDatabase.getInstance(application).contactDatabaseDao
 
         val viewModelFactory = ContactViewModelFactory(dataSource, application)
-        val viewModel = ViewModelProvider(this, viewModelFactory).get(ContactViewModel::class.java)
+        viewModel = ViewModelProvider(this, viewModelFactory).get(ContactViewModel::class.java)
 
         binding.lifecycleOwner = this
         binding.contactViewModel = viewModel
@@ -78,5 +81,20 @@ class ContactListFragment : Fragment() {
             contactWithAlphabetHeaders.add(ContactListAdapter.DataItem.ContactItem(contact))
         }
         return contactWithAlphabetHeaders
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.refresh -> {
+                Toast.makeText(activity, "Refresh", Toast.LENGTH_SHORT).show()
+                true
+            }
+            R.id.clear -> {
+                viewModel.clearContacts()
+                Toast.makeText(activity, "Clear", Toast.LENGTH_SHORT).show()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
     }
 }

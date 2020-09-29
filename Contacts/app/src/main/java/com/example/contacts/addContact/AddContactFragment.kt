@@ -38,7 +38,7 @@ class AddContactFragment : Fragment() {
                 viewModel.createContact(name, number)
                 Toast.makeText(activity, "Saved", Toast.LENGTH_SHORT).show()
             }
-            Toast.makeText(activity, "Unsuccessfully", Toast.LENGTH_SHORT).show()
+            activity?.onBackPressed()
         }
 
         binding.cancel.setOnClickListener {

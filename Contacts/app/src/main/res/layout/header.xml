@@ -12,12 +12,13 @@
         android:id="@+id/firstLetter"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:paddingStart="8dp"
-        android:paddingEnd="8dp"
+        android:background="@color/darkGray"
+        android:paddingStart="20dp"
         android:paddingTop="8dp"
+        android:paddingEnd="8dp"
+        android:paddingBottom="8dp"
         android:text="@string/alphabet_letter"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:textSize="14sp"
-        android:background="@color/darkGray"/>
+        android:textColor="#FFFFFF"
+        android:textSize="14sp" />
 </layout>
