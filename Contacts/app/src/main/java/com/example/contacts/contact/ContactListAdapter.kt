@@ -1,14 +1,13 @@
 package com.example.contacts.contact
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.contacts.ContactDiffCallback
-import com.example.contacts.R
 import com.example.contacts.database.Contact
+import com.example.contacts.databinding.HeaderBinding
 import com.example.contacts.databinding.ListItemContactBinding
 
 
@@ -24,18 +23,10 @@ class ContactListAdapter : ListAdapter<ContactListAdapter.DataItem,
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
-            ITEM_VIEW_TYPE_HEADER -> TextViewHolder.from(parent)
+            ITEM_VIEW_TYPE_HEADER -> IndexViewHolder.from(parent)
             ITEM_VIEW_TYPE_ITEM -> ViewHolder.from(parent)
             else -> throw ClassCastException("Unknown viewType ${viewType}")
         }
-    }
-
-    fun addHeaderAndSubmitList(list: List<Contact>?) {
-        val items = when (list) {
-            null -> listOf(DataItem.Header)
-            else -> listOf(DataItem.Header) + list.map { DataItem.ContactItem(it) }
-        }
-        submitList(items)
     }
 
     override fun getItemViewType(position: Int): Int {
@@ -45,12 +36,15 @@ class ContactListAdapter : ListAdapter<ContactListAdapter.DataItem,
         }
     }
 
-    class TextViewHolder(view: View): RecyclerView.ViewHolder(view) {
+    class IndexViewHolder(binding: HeaderBinding): RecyclerView.ViewHolder(binding.root) {
+        val firstLetter = binding.firstLetter
+
         companion object {
-            fun from(parent: ViewGroup): TextViewHolder {
+            fun from(parent: ViewGroup): IndexViewHolder {
                 val layoutInflater = LayoutInflater.from(parent.context)
-                val view = layoutInflater.inflate(R.layout.header, parent, false)
-                return TextViewHolder(view)
+                val binding = HeaderBinding
+                    .inflate(layoutInflater, parent, false)
+                return IndexViewHolder(binding)
             }
         }
     }
@@ -74,7 +68,8 @@ class ContactListAdapter : ListAdapter<ContactListAdapter.DataItem,
         data class ContactItem(val contact: Contact): DataItem() {
             override val id = contact.contactID
         }
-        object Header: DataItem() {
+
+        data class Header(val letter: String): DataItem() {
             override val id = Long.MIN_VALUE
         }
     }
@@ -83,9 +78,12 @@ class ContactListAdapter : ListAdapter<ContactListAdapter.DataItem,
         when (holder) {
             is ViewHolder -> {
                 val contact = getItem(position) as DataItem.ContactItem
-                holder.fullName.text = list[position]
-                holder.phoneNumber.text = contact.toString()
-                holder.phoneNumber.text = contact.toString()
+                holder.fullName.text = contact.contact.fullName
+                holder.phoneNumber.text = contact.contact.phoneNumber.toString()
+            }
+            is IndexViewHolder -> {
+                val contact = getItem(position) as DataItem.Header
+                holder.firstLetter.text = contact.letter
             }
         }
     }

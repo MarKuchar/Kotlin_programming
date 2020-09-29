@@ -1,6 +1,5 @@
 package com.example.contacts.contact
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.*
 import androidx.databinding.DataBindingUtil
@@ -12,6 +11,7 @@ import com.example.contacts.R
 import com.example.contacts.database.ContactDatabase
 import com.example.contacts.databinding.FragmentContactListBinding
 import androidx.recyclerview.widget.GridLayoutManager
+import com.example.contacts.database.Contact
 
 class ContactListFragment : Fragment() {
 
@@ -39,7 +39,8 @@ class ContactListFragment : Fragment() {
         // Get data from to database via view model and assign it to adapter's data
         viewModel.contacts.observe(viewLifecycleOwner, Observer {
             it?.let {
-                adapter.addHeaderAndSubmitList(it)
+                val contactWithAlphabetHeaders = alphabetizedContacts(it)
+                adapter.submitList(contactWithAlphabetHeaders)
             }
         })
 
@@ -58,5 +59,24 @@ class ContactListFragment : Fragment() {
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
         inflater.inflate(R.menu.option_menu, menu)
+    }
+
+    // Sort the list and add it to the list of DataItem, then the list will be submitted to the adapter
+    // directly. And adapter object itself organize the list
+    private fun alphabetizedContacts(contacts: List<Contact>) : MutableList<ContactListAdapter.DataItem> {
+        val contactItems = contacts.sortedBy { it.fullName }
+        val contactWithAlphabetHeaders = mutableListOf<ContactListAdapter.DataItem>()
+
+        var currentHeader: String? = null
+        contactItems.forEach { contact ->
+            contact.fullName.firstOrNull().toString().let {
+                if (it != currentHeader) {
+                    contactWithAlphabetHeaders.add(ContactListAdapter.DataItem.Header(it))
+                    currentHeader = it
+                }
+            }
+            contactWithAlphabetHeaders.add(ContactListAdapter.DataItem.ContactItem(contact))
+        }
+        return contactWithAlphabetHeaders
     }
 }
