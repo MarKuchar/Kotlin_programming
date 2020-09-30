@@ -50,7 +50,7 @@ class AddContactFragment : Fragment() {
         binding.personName.addTextChangedListener(object : TextValidator(binding.personName) {
             override fun validate(textView: TextView?, text: String?) {
                 if (text != null) {
-                    if (text.contains("a")) {
+                    if (text.contains(" ")) {
                         viewModel.hasFullName.value = true
                     }
                 }
@@ -60,7 +60,7 @@ class AddContactFragment : Fragment() {
         binding.phoneNumber.addTextChangedListener(object : TextValidator(binding.phoneNumber) {
             override fun validate(textView: TextView?, text: String?) {
                 if (text != null) {
-                    if (text.length > 6) {
+                    if (text.length > 9) {
                         viewModel.hasPhoneNumber.value = true
                     }
                 }

@@ -11,6 +11,7 @@ buildscript {
         supportlibVersion = '1.2.0'
         navigationVersion = "2.3.0"
         dataBindingCompilerVersion = gradleVersion // Always need to be the same.
+        version_retrofit = "2.6.0"
     }
 
     repositories {
