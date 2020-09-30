@@ -17,16 +17,14 @@ abstract class ContactDatabase: RoomDatabase() {
 
         fun getInstance(context: Context): ContactDatabase {
             synchronized(this) {
-                var instance = INSTANCE
-
-                if (instance == null) {
-                    instance = Room.databaseBuilder(
+                if (INSTANCE == null) {
+                    INSTANCE = Room.databaseBuilder(
                         context.applicationContext,
                         ContactDatabase::class.java,
                         "contact_database_history").fallbackToDestructiveMigration()
                         .build()
                 }
-                return instance
+                return INSTANCE!!
             }
         }
     }
