@@ -12,6 +12,7 @@ buildscript {
         navigationVersion = "2.3.0"
         dataBindingCompilerVersion = gradleVersion // Always need to be the same.
         version_retrofit = "2.6.0"
+        version_moshi = "1.8.0"
     }
 
     repositories {

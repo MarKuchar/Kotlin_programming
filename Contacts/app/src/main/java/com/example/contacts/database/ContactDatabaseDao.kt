@@ -2,6 +2,7 @@ package com.example.contacts.database
 
 import androidx.lifecycle.LiveData
 import androidx.room.*
+import org.json.JSONObject
 
 @Dao
 interface ContactDatabaseDao {

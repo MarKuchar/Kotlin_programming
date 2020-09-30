@@ -36,7 +36,7 @@ class AddContactFragment : Fragment() {
         binding.save.setOnClickListener {
             let {
                 val name = personName.text.toString()
-                val number = phoneNumber.text.toString().toInt()
+                val number = phoneNumber.text.toString().toLong()
                 viewModel.createContact(name, number)
                 Toast.makeText(activity, "Saved", Toast.LENGTH_SHORT).show()
             }
@@ -60,7 +60,7 @@ class AddContactFragment : Fragment() {
         binding.phoneNumber.addTextChangedListener(object : TextValidator(binding.phoneNumber) {
             override fun validate(textView: TextView?, text: String?) {
                 if (text != null) {
-                    if (text.length > 9) {
+                    if (text.length == 10) {
                         viewModel.hasPhoneNumber.value = true
                     }
                 }

@@ -17,7 +17,7 @@ class AddContactViewModel(private val databaseDAO: ContactDatabaseDao) : ViewMod
         databaseDAO.insert(contact)
     }
 
-    fun createContact(fullName: String, phoneNumber: Int) {
+    fun createContact(fullName: String, phoneNumber: Long) {
         viewModelScope.launch {
             val contact = Contact(fullName = fullName, phoneNumber = phoneNumber)
             insertContact(contact)
