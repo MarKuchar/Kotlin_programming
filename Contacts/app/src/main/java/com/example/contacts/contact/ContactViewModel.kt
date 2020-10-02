@@ -1,16 +1,17 @@
 package com.example.contacts.contact
 
-import android.accounts.NetworkErrorException
 import android.app.Application
 import androidx.lifecycle.*
 import com.example.contacts.database.Contact
 import com.example.contacts.database.ContactDatabaseDao
+import com.example.contacts.database.ContactList
+import com.example.contacts.network.ContactsAPI
+import kotlinx.coroutines.Deferred
 //import com.example.contacts.network.ContactNetwork
 //import com.example.contacts.network.ContactsAPI
 import kotlinx.coroutines.launch
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
+
+enum class ContactsApiStatus { LOADING, ERROR, DONE }
 
 class ContactViewModel(
     private val databaseDAO: ContactDatabaseDao,
@@ -18,35 +19,42 @@ class ContactViewModel(
 
     val contacts = databaseDAO.getAllContacts()
 
-//    private val _response = MutableLiveData<List<Contact>>()
-//    val response: LiveData<List<Contact>>
-//        get() = _response
+    private val _status = MutableLiveData<ContactsApiStatus>()
 
-//    init {
-//        getContacts()
-//    }
+    val status: LiveData<ContactsApiStatus>
+        get() = _status
+
+    private val _response = MutableLiveData<List<Contact>>()
+    val response: LiveData<List<Contact>>
+        get() = _response
+
+
+    private val _contacts = MutableLiveData<Deferred<ContactList>>()
+    val contactsAPI: LiveData<Deferred<ContactList>>
+        get() = _contacts
+
+    init {
+        getContacts()
+    }
 
     fun onClearContacts() {
         viewModelScope.launch {
             clear()
         }
     }
-    suspend fun clear() {
+    private suspend fun clear() {
         databaseDAO.clear()
     }
 
-//    private fun getContacts() {
-//        ContactsAPI.retrofitService.getProperties().enqueue(
-//            object: Callback<List<Contact>> {
-//                override fun onFailure(call: Call<List<Contact>>, t: Throwable) {
-//                    throw NetworkErrorException("The failure message: " + t.message)
-//                }
-//
-//                override fun onResponse(call: Call<List<Contact>>,
-//                                        response: Response<List<Contact>>
-//                ) {
-//                    _response.value = response.body()
-//                }
-//            })
-//    }
+    private fun getContacts() {
+        viewModelScope.launch {
+            _status.value = ContactsApiStatus.LOADING
+            try {
+                _contacts.value = ContactsAPI.retrofitService.getContactsAsync(10)
+                _status.value = ContactsApiStatus.DONE
+            } catch (e: Exception) {
+                _status.value = ContactsApiStatus.ERROR
+            }
+        }
+    }
 }

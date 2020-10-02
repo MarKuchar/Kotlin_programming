@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.contacts.ContactDiffCallback
 import com.example.contacts.database.Contact
+import com.example.contacts.database.ContactApi
 import com.example.contacts.databinding.HeaderBinding
 import com.example.contacts.databinding.ListItemContactBinding
 
@@ -61,8 +62,8 @@ class ContactListAdapter : ListAdapter<ContactListAdapter.DataItem,
 
     sealed class DataItem {
         abstract val id: Long
-        data class ContactItem(val contact: Contact): DataItem() {
-            override val id = contact.contactID
+        data class ContactItem(val contact: ContactApi): DataItem() {
+            override val id = Long.MAX_VALUE
         }
 
         data class Header(val letter: String): DataItem() {
@@ -74,8 +75,8 @@ class ContactListAdapter : ListAdapter<ContactListAdapter.DataItem,
         when (holder) {
             is ViewHolder -> {
                 val contact = getItem(position) as DataItem.ContactItem
-                holder.fullName.text = contact.contact.fullName
-                holder.phoneNumber.text = contact.contact.phoneNumber.toString()
+                holder.fullName.text = contact.contact.name.fullName
+                holder.phoneNumber.text = contact.contact.cell
             }
             is IndexViewHolder -> {
                 val contact = getItem(position) as DataItem.Header

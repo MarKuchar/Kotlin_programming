@@ -7,12 +7,16 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.viewModelScope
 import androidx.navigation.findNavController
 import com.example.contacts.R
 import com.example.contacts.database.ContactDatabase
 import com.example.contacts.databinding.FragmentContactListBinding
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.contacts.database.Contact
+import com.example.contacts.database.ContactApi
+import kotlinx.coroutines.launch
 
 class ContactListFragment : Fragment() {
 
@@ -40,10 +44,20 @@ class ContactListFragment : Fragment() {
         binding.contactList.adapter = adapter
 
         // Get data from to database via view model and assign it to adapter's data
-        viewModel.contacts.observe(viewLifecycleOwner, Observer {
+//        viewModel.contacts.observe(viewLifecycleOwner, Observer {
+//            it?.let {
+//                val contactWithAlphabetHeaders = alphabetizedContacts(it)
+//                adapter.submitList(contactWithAlphabetHeaders)
+//            }
+//        })
+
+        viewModel.contactsAPI.observe(viewLifecycleOwner, Observer {
             it?.let {
-                val contactWithAlphabetHeaders = alphabetizedContacts(it)
-                adapter.submitList(contactWithAlphabetHeaders)
+                lifecycleScope.launch {
+                    val contactWithAlphabetHeaders =
+                        alphabetizedContactsAPI(it.await().contactList)
+                    adapter.submitList(contactWithAlphabetHeaders)
+                }
             }
         })
 
@@ -66,13 +80,31 @@ class ContactListFragment : Fragment() {
 
     // Sort the list and add it to the list of DataItem, then the list will be submitted to the adapter
     // directly. And adapter object itself organize the list
-    private fun alphabetizedContacts(contacts: List<Contact>) : MutableList<ContactListAdapter.DataItem> {
-        val contactItems = contacts.sortedBy { it.fullName }
+//    private fun alphabetizedContacts(contacts: List<Contact>) : MutableList<ContactListAdapter.DataItem> {
+//        val contactItems = contacts.sortedBy { it.fullName }
+//        val contactWithAlphabetHeaders = mutableListOf<ContactListAdapter.DataItem>()
+//
+//        var currentHeader: String? = null
+//        contactItems.forEach { contact ->
+//            contact.fullName.firstOrNull().toString().let {
+//                if (it != currentHeader) {
+//                    contactWithAlphabetHeaders.add(ContactListAdapter.DataItem.Header(it))
+//                    currentHeader = it
+//                }
+//            }
+//            contactWithAlphabetHeaders.add(ContactListAdapter.DataItem.ContactItem(contact))
+//        }
+//        return contactWithAlphabetHeaders
+//    }
+
+
+    private suspend fun alphabetizedContactsAPI(contacts: List<ContactApi>) : MutableList<ContactListAdapter.DataItem> {
+        val contactItems = contacts.sortedBy { it.name.first }
         val contactWithAlphabetHeaders = mutableListOf<ContactListAdapter.DataItem>()
 
         var currentHeader: String? = null
         contactItems.forEach { contact ->
-            contact.fullName.firstOrNull().toString().let {
+            contact.name.first.firstOrNull().toString().let {
                 if (it != currentHeader) {
                     contactWithAlphabetHeaders.add(ContactListAdapter.DataItem.Header(it))
                     currentHeader = it
