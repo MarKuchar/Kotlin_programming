@@ -3,11 +3,10 @@ package com.example.contacts.contact
 import android.app.Application
 import androidx.lifecycle.*
 import com.example.contacts.database.Contact
+import com.example.contacts.database.ContactDatabase
 import com.example.contacts.database.ContactDatabaseDao
 import com.example.contacts.model.DomainContact
-import com.example.contacts.network.ContactNetwork
-import kotlinx.coroutines.Deferred
-import kotlinx.coroutines.delay
+import com.example.contacts.repository.ContactRepository
 //import com.example.contacts.network.ContactNetwork
 //import com.example.contacts.network.ContactsAPI
 import kotlinx.coroutines.launch
@@ -19,28 +18,35 @@ class ContactViewModel(
     private val databaseDAO: ContactDatabaseDao,
     application: Application) : AndroidViewModel(application) {
 
+    private val contactRepository = ContactRepository(ContactDatabase.getInstance(application))
+
+    val contacts = contactRepository.contacts
+
 //    val contacts = databaseDAO.getAllContacts()
 
     private var _eventNetworkError = MutableLiveData<Boolean>(false)
     val eventNetworkError: LiveData<Boolean>
         get() = _eventNetworkError
 
-    private val _status = MutableLiveData<ContactsApiStatus>()
+//    private val _status = MutableLiveData<ContactsApiStatus>()
+//    val status: LiveData<ContactsApiStatus>
+//        get() = _status
 
-    val status: LiveData<ContactsApiStatus>
-        get() = _status
-
-    private val _response = MutableLiveData<List<Contact>>()
-    val response: LiveData<List<Contact>>
-        get() = _response
+//    private val _response = MutableLiveData<List<Contact>>()
+//    val response: LiveData<List<Contact>>
+//        get() = _response
 
 
-    private val _contacts = MutableLiveData<List<DomainContact>>()
-    val contactsAPI: LiveData<List<DomainContact>>
-        get() = _contacts
+//    private val _contacts = MutableLiveData<List<DomainContact>>()
+//    val contactsAPI: LiveData<List<DomainContact>>
+//        get() = _contacts
+
+    private var _isNetworkErrorShown = MutableLiveData<Boolean>(false)
+    val isNetworkErrorShown: LiveData<Boolean>
+        get() = _isNetworkErrorShown
 
     init {
-        getContacts()
+        refreshDataFromRepository()
     }
 
     fun onClearContacts() {
@@ -52,25 +58,29 @@ class ContactViewModel(
         databaseDAO.clear()
     }
 
-    private fun getContacts() {
+    /**
+     * Refresh data from the repository. Use a coroutine launch to run in a
+     * background thread.
+     */
+    private fun refreshDataFromRepository() {
         viewModelScope.launch {
-            _status.value = ContactsApiStatus.LOADING
             try {
-//                _contacts.value = ContactNetwork.contacts.getContactsAsync(20)
-                _status.value = ContactsApiStatus.DONE
-            } catch (e: Exception) {
-                _status.value = ContactsApiStatus.ERROR
+                contactRepository.refreshContacts()
+                _eventNetworkError.value = false
+                _isNetworkErrorShown.value = false
+
+            } catch (networkError: IOException) {
+                // Show a Toast error message and hide the progress bar.
+                if(contacts.value.isNullOrEmpty())
+                    _eventNetworkError.value = true
             }
         }
     }
 
-    private fun refreshDataFromNetwork() = viewModelScope.launch {
-
-        try {
-        } catch (networkError: IOException) {
-            delay(2000)
-            // Show a Toast error message and hide the progress bar.
-            _eventNetworkError.value = true
-        }
+    /**
+     * Resets the network error flag.
+     */
+    fun onNetworkErrorShown() {
+        _isNetworkErrorShown.value = true
     }
 }

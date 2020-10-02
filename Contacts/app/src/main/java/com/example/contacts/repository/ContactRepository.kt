@@ -12,6 +12,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import timber.log.Timber
 import com.example.contacts.network.asDatabaseModel
+import kotlinx.coroutines.Deferred
 
 class ContactRepository(private val database: ContactDatabase) {
     val contacts: LiveData<List<DomainContact>> = Transformations
@@ -19,14 +20,15 @@ class ContactRepository(private val database: ContactDatabase) {
             it.asDomainModel()
         }
 
-    suspend fun refreshVideos() {
+    suspend fun refreshContacts() {
         withContext(Dispatchers.IO) {
             Timber.d("refresh contacts is called");
-            val contactsAPI = ContactNetwork.contacts.getContactsAsync(20)
+            val contactsAPI = ContactNetwork.contacts.getContactsAsync(20).await()
             database.contactDatabaseDao.insertAll(contactsAPI.asDatabaseModel())
         }
     }
 }
+
 
 
 

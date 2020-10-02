@@ -28,3 +28,4 @@ fun List<Contact>.asDomainModel(): List<DomainContact> {
         )
     }
 }
+

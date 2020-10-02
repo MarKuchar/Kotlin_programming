@@ -7,7 +7,6 @@ import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
 data class ContactList(
-//    @field:Json(name="results")
     val contactList: List<ContactApi>)
 
 @JsonClass(generateAdapter = true)
@@ -73,4 +72,3 @@ fun ContactList.asDatabaseModel(): List<Contact> {
         )
     }
 }
-

@@ -50,14 +50,18 @@ class ContactListFragment : Fragment() {
 //            }
 //        })
 
-        viewModel.contactsAPI.observe(viewLifecycleOwner, Observer {
-            it?.let {
+        viewModel.contacts.observe(viewLifecycleOwner, Observer<List<DomainContact>> { contacts ->
+            contacts?.apply {
                 lifecycleScope.launch {
                     val contactWithAlphabetHeaders =
-                        alphabetizedContactsAPI(it)
+                        alphabetizedContactsAPI(contacts)
                     adapter.submitList(contactWithAlphabetHeaders)
                 }
             }
+        })
+
+        viewModel.eventNetworkError.observe(viewLifecycleOwner, Observer<Boolean> { isNetworkError ->
+            if (isNetworkError) onNetworkError()
         })
 
         // Init manager to layout all the text holders
@@ -126,6 +130,13 @@ class ContactListFragment : Fragment() {
                 true
             }
             else -> super.onOptionsItemSelected(item)
+        }
+    }
+
+    private fun onNetworkError() {
+        if(!viewModel.isNetworkErrorShown.value!!) {
+            Toast.makeText(activity, "Network Error", Toast.LENGTH_LONG).show()
+            viewModel.onNetworkErrorShown()
         }
     }
 }
