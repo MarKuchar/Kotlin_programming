@@ -23,10 +23,10 @@ private val moshi = Moshi.Builder()
     .build()
 
 // 1. Create a retrofit object
-private val retrofit = Retrofit.Builder()
-    .addConverterFactory(MoshiConverterFactory.create(moshi))
-    .baseUrl(BASE_URL)
-    .build()
+//private val retrofit = Retrofit.Builder()
+//    .addConverterFactory(MoshiConverterFactory.create(moshi))
+//    .baseUrl(BASE_URL)
+//    .build()
 
 //  2. API interface
 interface ContactApiService {
@@ -34,11 +34,11 @@ interface ContactApiService {
     fun getContactsAsync(@Query("results") num: Int): Deferred<ContactList>
 }
 
-// 3. Singleton object
-object ContactsAPI {
-    val retrofitService : ContactApiService by lazy {
-        retrofit.create(ContactApiService::class.java) }
-}
+//// 3. Singleton object
+//object ContactsAPI {
+//    val retrofitService : ContactApiService by lazy {
+//        retrofit.create(ContactApiService::class.java) }
+//}
 
 object ContactNetwork {
     private val retrofit = Retrofit.Builder()
@@ -48,3 +48,4 @@ object ContactNetwork {
         .build()
     val contacts: ContactApiService = retrofit.create(ContactApiService::class.java)
 }
+
