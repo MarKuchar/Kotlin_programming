@@ -8,6 +8,9 @@ interface ContactDatabaseDao {
     @Insert
     suspend fun insert(contact: Contact)
 
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insertAll( videos: List<Contact>)
+
     @Query("DELETE FROM contacts_table")
     suspend fun clear()
 

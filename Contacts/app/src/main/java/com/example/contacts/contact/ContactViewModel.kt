@@ -4,7 +4,7 @@ import android.app.Application
 import androidx.lifecycle.*
 import com.example.contacts.database.Contact
 import com.example.contacts.database.ContactDatabaseDao
-import com.example.contacts.database.ContactList
+import com.example.contacts.model.DomainContact
 import com.example.contacts.network.ContactNetwork
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.delay
@@ -35,8 +35,8 @@ class ContactViewModel(
         get() = _response
 
 
-    private val _contacts = MutableLiveData<Deferred<ContactList>>()
-    val contactsAPI: LiveData<Deferred<ContactList>>
+    private val _contacts = MutableLiveData<List<DomainContact>>()
+    val contactsAPI: LiveData<List<DomainContact>>
         get() = _contacts
 
     init {
@@ -56,7 +56,7 @@ class ContactViewModel(
         viewModelScope.launch {
             _status.value = ContactsApiStatus.LOADING
             try {
-                _contacts.value = ContactNetwork.contacts.getContactsAsync(20)
+//                _contacts.value = ContactNetwork.contacts.getContactsAsync(20)
                 _status.value = ContactsApiStatus.DONE
             } catch (e: Exception) {
                 _status.value = ContactsApiStatus.ERROR

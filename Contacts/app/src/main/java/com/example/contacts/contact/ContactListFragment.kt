@@ -14,8 +14,7 @@ import com.example.contacts.R
 import com.example.contacts.database.ContactDatabase
 import com.example.contacts.databinding.FragmentContactListBinding
 import androidx.recyclerview.widget.GridLayoutManager
-import com.example.contacts.database.Contact
-import com.example.contacts.database.ContactApi
+import com.example.contacts.model.DomainContact
 import kotlinx.coroutines.launch
 
 class ContactListFragment : Fragment() {
@@ -55,7 +54,7 @@ class ContactListFragment : Fragment() {
             it?.let {
                 lifecycleScope.launch {
                     val contactWithAlphabetHeaders =
-                        alphabetizedContactsAPI(it.await().contactList)
+                        alphabetizedContactsAPI(it)
                     adapter.submitList(contactWithAlphabetHeaders)
                 }
             }
@@ -98,13 +97,13 @@ class ContactListFragment : Fragment() {
 //    }
 
 
-    private suspend fun alphabetizedContactsAPI(contacts: List<ContactApi>) : MutableList<ContactListAdapter.DataItem> {
-        val contactItems = contacts.sortedBy { it.name.first }
+    private suspend fun alphabetizedContactsAPI(contacts: List<DomainContact>) : MutableList<ContactListAdapter.DataItem> {
+        val contactItems = contacts.sortedBy { it.name }
         val contactWithAlphabetHeaders = mutableListOf<ContactListAdapter.DataItem>()
 
         var currentHeader: String? = null
         contactItems.forEach { contact ->
-            contact.name.first.firstOrNull().toString().let {
+            contact.name.first().toString().let {
                 if (it != currentHeader) {
                     contactWithAlphabetHeaders.add(ContactListAdapter.DataItem.Header(it))
                     currentHeader = it
