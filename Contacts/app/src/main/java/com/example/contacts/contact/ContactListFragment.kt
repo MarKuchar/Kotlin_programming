@@ -43,13 +43,6 @@ class ContactListFragment : Fragment() {
         binding.contactList.adapter = adapter
 
         // Get data from to database via view model and assign it to adapter's data
-//        viewModel.contacts.observe(viewLifecycleOwner, Observer {
-//            it?.let {
-//                val contactWithAlphabetHeaders = alphabetizedContacts(it)
-//                adapter.submitList(contactWithAlphabetHeaders)
-//            }
-//        })
-
         viewModel.contacts.observe(viewLifecycleOwner, Observer<List<DomainContact>> { contacts ->
             contacts?.apply {
                 lifecycleScope.launch {

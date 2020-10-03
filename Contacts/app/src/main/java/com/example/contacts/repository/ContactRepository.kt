@@ -23,7 +23,7 @@ class ContactRepository(private val database: ContactDatabase) {
     suspend fun refreshContacts() {
         withContext(Dispatchers.IO) {
             Timber.d("refresh contacts is called");
-            val contactsAPI = ContactNetwork.contacts.getContactsAsync(1).await()
+            val contactsAPI = ContactNetwork.contacts.getContactsAsync(20).await()
             database.contactDatabaseDao.insertAll(contactsAPI.asDatabaseModel())
         }
     }

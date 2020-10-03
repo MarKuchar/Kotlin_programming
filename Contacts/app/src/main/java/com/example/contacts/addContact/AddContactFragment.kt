@@ -37,7 +37,11 @@ class AddContactFragment : Fragment() {
             let {
                 val name = personName.text.toString()
                 val number = phoneNumber.text.toString()
-                viewModel.createContact(name, number)
+                viewModel.createContact(
+                    name, "(" + number.subSequence(0, 3) + ")-" +
+                        number.subSequence(3, 6) + "-" +
+                            number.subSequence(6, number.length)
+                )
                 Toast.makeText(activity, "Saved", Toast.LENGTH_SHORT).show()
             }
             activity?.onBackPressed()
