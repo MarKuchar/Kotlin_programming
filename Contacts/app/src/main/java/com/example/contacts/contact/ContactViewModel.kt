@@ -28,19 +28,6 @@ class ContactViewModel(
     val eventNetworkError: LiveData<Boolean>
         get() = _eventNetworkError
 
-//    private val _status = MutableLiveData<ContactsApiStatus>()
-//    val status: LiveData<ContactsApiStatus>
-//        get() = _status
-
-//    private val _response = MutableLiveData<List<Contact>>()
-//    val response: LiveData<List<Contact>>
-//        get() = _response
-
-
-//    private val _contacts = MutableLiveData<List<DomainContact>>()
-//    val contactsAPI: LiveData<List<DomainContact>>
-//        get() = _contacts
-
     private var _isNetworkErrorShown = MutableLiveData<Boolean>(false)
     val isNetworkErrorShown: LiveData<Boolean>
         get() = _isNetworkErrorShown
@@ -62,7 +49,7 @@ class ContactViewModel(
      * Refresh data from the repository. Use a coroutine launch to run in a
      * background thread.
      */
-    private fun refreshDataFromRepository() {
+    fun refreshDataFromRepository() {
         viewModelScope.launch {
             try {
                 contactRepository.refreshContacts()

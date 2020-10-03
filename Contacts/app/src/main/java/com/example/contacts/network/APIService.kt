@@ -24,7 +24,7 @@ interface ContactApiService {
 object ContactNetwork {
     // Configure retrofit to parse JSON and use coroutines
     private val retrofit = Retrofit.Builder()
-        .baseUrl("https://randomuser.me/api/")
+        .baseUrl(BASE_URL)
         .addConverterFactory(MoshiConverterFactory.create())
         .addCallAdapterFactory(CoroutineCallAdapterFactory())
         .build()

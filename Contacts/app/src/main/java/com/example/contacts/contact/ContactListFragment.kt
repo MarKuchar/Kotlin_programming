@@ -83,25 +83,7 @@ class ContactListFragment : Fragment() {
 
     // Sort the list and add it to the list of DataItem, then the list will be submitted to the adapter
     // directly. And adapter object itself organize the list
-//    private fun alphabetizedContacts(contacts: List<Contact>) : MutableList<ContactListAdapter.DataItem> {
-//        val contactItems = contacts.sortedBy { it.fullName }
-//        val contactWithAlphabetHeaders = mutableListOf<ContactListAdapter.DataItem>()
-//
-//        var currentHeader: String? = null
-//        contactItems.forEach { contact ->
-//            contact.fullName.firstOrNull().toString().let {
-//                if (it != currentHeader) {
-//                    contactWithAlphabetHeaders.add(ContactListAdapter.DataItem.Header(it))
-//                    currentHeader = it
-//                }
-//            }
-//            contactWithAlphabetHeaders.add(ContactListAdapter.DataItem.ContactItem(contact))
-//        }
-//        return contactWithAlphabetHeaders
-//    }
-
-
-    private suspend fun alphabetizedContactsAPI(contacts: List<DomainContact>) : MutableList<ContactListAdapter.DataItem> {
+    private fun alphabetizedContactsAPI(contacts: List<DomainContact>) : MutableList<ContactListAdapter.DataItem> {
         val contactItems = contacts.sortedBy { it.name }
         val contactWithAlphabetHeaders = mutableListOf<ContactListAdapter.DataItem>()
 
@@ -121,6 +103,7 @@ class ContactListFragment : Fragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.refresh -> {
+                viewModel.refreshDataFromRepository()
                 Toast.makeText(activity, "Refresh", Toast.LENGTH_SHORT).show()
                 true
             }
