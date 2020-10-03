@@ -21,9 +21,6 @@ class ContactViewModel(
     private val contactRepository = ContactRepository(ContactDatabase.getInstance(application))
 
     val contacts = contactRepository.contacts
-
-//    val contacts = databaseDAO.getAllContacts()
-
     private var _eventNetworkError = MutableLiveData<Boolean>(false)
     val eventNetworkError: LiveData<Boolean>
         get() = _eventNetworkError

@@ -14,7 +14,7 @@ data class Contact(
     var fullName: String,
 
     @ColumnInfo(name = "phone_number")
-    var phoneNumber: Long
+    var phoneNumber: String
 )
 
 /**

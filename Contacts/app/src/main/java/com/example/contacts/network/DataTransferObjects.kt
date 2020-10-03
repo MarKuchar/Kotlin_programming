@@ -4,10 +4,11 @@ import com.example.contacts.database.Contact
 import com.example.contacts.model.DomainContact
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
+import com.squareup.moshi.Moshi
 
 @JsonClass(generateAdapter = true)
 data class ContactList(
-    val contactList: List<ContactApi>)
+    val contactList: List<ContactApi> = listOf())
 
 @JsonClass(generateAdapter = true)
 data class ContactApi(val gender: String,
@@ -68,7 +69,7 @@ fun ContactList.asDatabaseModel(): List<Contact> {
         Contact(
             contactID = 0L,
             fullName = it.name.fullName,
-            phoneNumber = 5L
+            phoneNumber = it.cell
         )
     }
 }
