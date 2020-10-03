@@ -8,7 +8,9 @@ import com.squareup.moshi.Moshi
 
 @JsonClass(generateAdapter = true)
 data class ContactList(
-    val contactList: List<ContactApi> = listOf())
+    @field:Json(name="results")
+    val contactList: List<ContactApi>)
+
 
 @JsonClass(generateAdapter = true)
 data class ContactApi(val gender: String,

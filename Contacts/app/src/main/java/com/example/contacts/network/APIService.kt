@@ -14,7 +14,7 @@ private const val BASE_URL = "https://randomuser.me/api/"
  * A retrofit service to fetch a contact list.
  */
 interface ContactApiService {
-    @GET("?nat=ca")
+    @GET("?nat=us")
     fun getContactsAsync(@Query("results") num: Int): Deferred<ContactList>
 }
 
