@@ -11,8 +11,6 @@ class AddContactViewModel(private val databaseDAO: ContactDatabaseDao) : ViewMod
     var hasFullName = MutableLiveData<Boolean>(false)
     var hasPhoneNumber = MutableLiveData<Boolean>(false)
 
-    private var newContact = MutableLiveData<Contact?>()
-
     private suspend fun insertContact(contact: Contact) {
         databaseDAO.insert(contact)
     }

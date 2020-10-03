@@ -45,7 +45,7 @@ class ContactListAdapter : ListAdapter<ContactListAdapter.DataItem,
         }
     }
 
-    class ViewHolder private constructor(binding: ListItemContactBinding) : RecyclerView.ViewHolder(binding.root){
+    class ViewHolder private constructor(binding: ListItemContactBinding) : RecyclerView.ViewHolder(binding.root) {
         val fullName: TextView = binding.fullName
         val phoneNumber: TextView = binding.phoneNumber
 

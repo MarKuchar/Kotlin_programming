@@ -2,17 +2,12 @@ package com.example.contacts.contact
 
 import android.app.Application
 import androidx.lifecycle.*
-import com.example.contacts.database.Contact
 import com.example.contacts.database.ContactDatabase
 import com.example.contacts.database.ContactDatabaseDao
-import com.example.contacts.model.DomainContact
 import com.example.contacts.repository.ContactRepository
-//import com.example.contacts.network.ContactNetwork
-//import com.example.contacts.network.ContactsAPI
 import kotlinx.coroutines.launch
 import java.io.IOException
 
-enum class ContactsApiStatus { LOADING, ERROR, DONE }
 
 class ContactViewModel(
     private val databaseDAO: ContactDatabaseDao,

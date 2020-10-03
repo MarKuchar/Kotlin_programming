@@ -6,7 +6,7 @@
     <data>
         <variable
             name="contact"
-            type="com.example.contacts.database.Contact" />
+            type="com.example.contacts.model.DomainContact" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -34,7 +34,6 @@
             android:layout_width="0dp"
             android:layout_height="24dp"
             android:paddingStart="16dp"
-
             android:text="@string/phone_number"
             android:textSize="16sp"
             android:textStyle="italic"
