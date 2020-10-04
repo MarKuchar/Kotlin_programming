@@ -93,6 +93,6 @@ class ContactListAdapter(val clickListener: ContactListener) : ListAdapter<Conta
     }
 }
 
-class ContactListener(val clickListener: (contactName: String) -> Unit) {
-    fun onClick(contact: DomainContact) = clickListener(contact.cell)
+class ContactListener(val clickListener: (name: String, cell: String) -> Unit) {
+    fun onClick(contact: DomainContact) = clickListener(contact.name, contact.cell)
 }

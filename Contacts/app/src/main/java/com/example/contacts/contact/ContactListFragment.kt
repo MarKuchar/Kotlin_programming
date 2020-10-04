@@ -9,6 +9,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import com.example.contacts.R
 import com.example.contacts.database.ContactDatabase
 import com.example.contacts.databinding.FragmentContactListBinding
@@ -38,10 +39,19 @@ class ContactListFragment : Fragment() {
         binding.contactViewModel = viewModel
 
         // Init adapter object to manage the data display on the text holder
-        val adapter = ContactListAdapter(ContactListener {
-            Toast.makeText(context, "${it}", Toast.LENGTH_LONG).show()
+        val adapter = ContactListAdapter(ContactListener { name: String, cell: String ->
+            Toast.makeText(context, "${name}", Toast.LENGTH_LONG).show()
+            viewModel.onContactClicked(name, cell)
         })
+
         binding.contactList.adapter = adapter
+
+        viewModel.navigateToSleepDetail.observe(viewLifecycleOwner, Observer {
+            it?.let {
+                this.findNavController().navigate(ContactListFragmentDirections
+                    .actionContactListFragmentToDetailContactFragment(it.name, it.cell))
+            }
+        })
 
         // Get data from to database via view model and assign it to adapter's data
         viewModel.contacts.observe(viewLifecycleOwner, Observer<List<DomainContact>> { contacts ->

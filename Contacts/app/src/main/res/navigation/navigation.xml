@@ -15,6 +15,9 @@
         <action
             android:id="@+id/action_contact_list_fragment_to_add_contact"
             app:destination="@id/add_contact" />
+        <action
+            android:id="@+id/action_contact_list_fragment_to_detailContactFragment"
+            app:destination="@id/contact_detail" />
     </fragment>
 
     <fragment
@@ -22,5 +25,17 @@
         android:name="com.example.contacts.addContact.AddContactFragment"
         android:label="@string/AddContact"
         tools:layout="@layout/fragment_add_contact"/>
+
+    <fragment
+        android:id="@+id/contact_detail"
+        android:name="com.example.contacts.detail.ContactDetailFragment"
+        tools:layout="@layout/fragment_contact_detail">
+        <argument
+            android:name="name"
+            app:argType="string" />
+        <argument
+            android:name="cell"
+            app:argType="string" />
+    </fragment>
 
 </navigation>

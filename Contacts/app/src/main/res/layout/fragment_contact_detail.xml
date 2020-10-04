@@ -3,10 +3,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <data>
-
-    </data>
-
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="wrap_content"
         android:layout_height="match_parent">
@@ -29,6 +25,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="30dp"
+                android:textStyle="bold"
                 android:textAlignment="center"
                 android:textSize="30sp" />
 
@@ -36,8 +33,16 @@
                 android:id="@+id/cell"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:textStyle="italic"
                 android:textAlignment="center"
                 android:textSize="25sp" />
+
+            <Button
+                android:id="@+id/back"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:text="@string/back" />
         </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

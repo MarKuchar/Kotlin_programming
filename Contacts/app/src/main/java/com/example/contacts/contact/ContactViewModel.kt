@@ -4,6 +4,7 @@ import android.app.Application
 import androidx.lifecycle.*
 import com.example.contacts.database.ContactDatabase
 import com.example.contacts.database.ContactDatabaseDao
+import com.example.contacts.model.DomainContact
 import com.example.contacts.repository.ContactRepository
 import kotlinx.coroutines.launch
 import java.io.IOException
@@ -12,6 +13,10 @@ import java.io.IOException
 class ContactViewModel(
     private val databaseDAO: ContactDatabaseDao,
     application: Application) : AndroidViewModel(application) {
+
+    private val _navigateContactDetail = MutableLiveData<DomainContact>()
+    val navigateToSleepDetail
+        get() = _navigateContactDetail
 
     private val contactRepository = ContactRepository(ContactDatabase.getInstance(application))
 
@@ -63,7 +68,12 @@ class ContactViewModel(
         _isNetworkErrorShown.value = true
     }
 
-    fun onContactClicked(id: String) {
+    fun onContactClicked(name: String, cell: String) {
+        val contact = DomainContact(name, cell)
+        _navigateContactDetail.value = contact
+    }
 
+    fun onSleepDetailNavigated() {
+        _navigateContactDetail.value = null
     }
 }
