@@ -26,8 +26,10 @@ class ContactDetailFragment : Fragment() {
         val arg = ContactDetailFragmentArgs.fromBundle(requireArguments())
         binding.name.text = arg.name
         binding.cell.text = arg.cell
-
-
+        binding.back.setOnClickListener {
+            this.findNavController().navigate(
+                ContactDetailFragmentDirections.actionContactDetailToContactListFragment())
+        }
         return binding.root
     }
 
