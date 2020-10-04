@@ -62,4 +62,8 @@ class ContactViewModel(
     fun onNetworkErrorShown() {
         _isNetworkErrorShown.value = true
     }
+
+    fun onContactClicked(id: String) {
+
+    }
 }

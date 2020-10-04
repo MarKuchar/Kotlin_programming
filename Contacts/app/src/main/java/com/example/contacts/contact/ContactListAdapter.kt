@@ -14,7 +14,7 @@ import com.example.contacts.model.DomainContact
 private val ITEM_VIEW_TYPE_HEADER = 0
 private val ITEM_VIEW_TYPE_ITEM = 1
 
-class ContactListAdapter : ListAdapter<ContactListAdapter.DataItem,
+class ContactListAdapter(val clickListener: ContactListener) : ListAdapter<ContactListAdapter.DataItem,
         RecyclerView.ViewHolder>(ContactDiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
@@ -45,9 +45,15 @@ class ContactListAdapter : ListAdapter<ContactListAdapter.DataItem,
         }
     }
 
-    class ViewHolder private constructor(binding: ListItemContactBinding) : RecyclerView.ViewHolder(binding.root) {
+    class ViewHolder private constructor(val binding: ListItemContactBinding) : RecyclerView.ViewHolder(binding.root) {
         val fullName: TextView = binding.fullName
         val phoneNumber: TextView = binding.phoneNumber
+
+        fun bind(item: DomainContact, clickListener: ContactListener) {
+            binding.contact = item
+            binding.clickListener = clickListener
+            binding.executePendingBindings()
+        }
 
         companion object {
             fun from(parent: ViewGroup): ViewHolder {
@@ -76,6 +82,8 @@ class ContactListAdapter : ListAdapter<ContactListAdapter.DataItem,
                 val contact = getItem(position) as DataItem.ContactItem
                 holder.fullName.text = contact.contact.name
                 holder.phoneNumber.text = contact.contact.cell
+                holder.bind(contact.contact, clickListener)
+
             }
             is IndexViewHolder -> {
                 val contact = getItem(position) as DataItem.Header
@@ -83,4 +91,8 @@ class ContactListAdapter : ListAdapter<ContactListAdapter.DataItem,
             }
         }
     }
+}
+
+class ContactListener(val clickListener: (contactName: String) -> Unit) {
+    fun onClick(contact: DomainContact) = clickListener(contact.cell)
 }

@@ -38,7 +38,9 @@ class ContactListFragment : Fragment() {
         binding.contactViewModel = viewModel
 
         // Init adapter object to manage the data display on the text holder
-        val adapter = ContactListAdapter()
+        val adapter = ContactListAdapter(ContactListener {
+            Toast.makeText(context, "${it}", Toast.LENGTH_LONG).show()
+        })
         binding.contactList.adapter = adapter
 
         // Get data from to database via view model and assign it to adapter's data
